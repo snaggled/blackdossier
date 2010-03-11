@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+		
+<hibernate-mapping package="com.packetnode.blackdossier.quote"> 
+    <class name="Quote" table="quotes"> 
+        <id name="id" column="quote_id"> 
+            <generator class="native"/> 
+        </id> 
+        <property name="ticker"/> 
+        <property name="close"/> 
+        <property name="priceChange" column="price_change"/> 
+        <property name="percentChange" column="percent_change"/> 
+        <property name="open"/> 
+        <property name="high"/> 
+        <property name="low"/> 
+        <property name="volume"/> 
+        <property name="adjustedClose"/> 
+        <property name="date" type="date" column="event_date"/> 
+    </class> 
+</hibernate-mapping> 

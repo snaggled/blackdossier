@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"> 
+    <modelVersion>4.0.0</modelVersion> 
+    <groupId>com.packetnode.blackdossier</groupId> 
+    <artifactId>blackdossier</artifactId> 
+    <version>1.0.0-development</version> 
+    <name>Black Dossier</name>   
+    <build> 
+        <finalName>${artifactId}</finalName>   
+		<pluginManagement>
+		<plugins>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<!-- best lock down version of the plugin too -->
+		<configuration>
+		<source>1.5</source>
+		<target>1.5</target>
+		</configuration>
+		</plugin>
+		</plugins>
+		</pluginManagement>
+    </build> 
+    <dependencies> 
+	  <dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	    <version>4.1-alpha1</version>
+	    <scope>compile</scope>
+	  </dependency>
+        <dependency> 
+            <groupId>org.hibernate</groupId> 
+            <artifactId>hibernate-core</artifactId>    
+			<version>3.3.2.GA</version>
+        </dependency> 
+        <!-- Because this is a web app, we also have a dependency on the servlet api. --> 
+        <dependency> 
+            <groupId>javax.servlet</groupId> 
+            <artifactId>servlet-api</artifactId> 
+			<version>2.5</version>
+        </dependency>         
+        <dependency> 
+            <groupId>mysql</groupId> 
+            <artifactId>mysql-connector-java</artifactId> 
+			<version>5.1.9</version>
+        </dependency>         
+        <dependency> 
+            <groupId>org.slf4j</groupId> 
+            <artifactId>slf4j-simple</artifactId> 
+			<version>1.5.11</version>
+        </dependency> 
+        <dependency> 
+            <groupId>javassist</groupId> 
+            <artifactId>javassist</artifactId> 
+			<version>3.8.0.GA</version>
+        </dependency> 
+    </dependencies> 
+</project>
