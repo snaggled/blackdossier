@@ -11,6 +11,8 @@ public interface QuoteFactory
 										 "JPM", "KFT", "MCD", "MRK", "MSFT", "PFE", 
 										 "PG", "TRV", "UTX", "VZ", "WMT"};
 
+	//final static String[] DJIA = new String[] {"AA", "AXP"};
+	
 	public List<String> getAllTickers() throws QuoteFactoryException;
 	public List<String> getTickers(String regex) throws QuoteFactoryException;
 	public Quote getQuote(String ticker) throws QuoteFactoryException;

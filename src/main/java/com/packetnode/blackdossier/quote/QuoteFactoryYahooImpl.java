@@ -1,6 +1,7 @@
 package com.packetnode.blackdossier.quote;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -11,13 +12,44 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public abstract class QuoteFactoryYahooImpl implements QuoteFactory
+public class QuoteFactoryYahooImpl implements QuoteFactory
 {
 	protected HttpClient httpClient;
-
-	public QuoteFactoryYahooImpl()
+	
+	private List<QuoteFactory> factories = new ArrayList<QuoteFactory>();
+	private static QuoteFactory singletonFactory = null;
+	
+	public static QuoteFactory getFactory()
+	{
+		if (singletonFactory == null)
+		{	
+			singletonFactory = new QuoteFactoryYahooImpl(true);
+		}
+		return singletonFactory;
+	}
+	
+	protected QuoteFactoryYahooImpl()
 	{		
 		httpClient = new DefaultHttpClient();
+	}
+	
+	protected QuoteFactoryYahooImpl(boolean withFactories)
+	{
+		this();
+		// the order actually matters, which probably breaks the 
+		// design pattern
+		if (withFactories)
+		{
+			addFactory(new QuoteFactoryCachedYahooHistoricalImpl());
+			addFactory(new QuoteFactoryYahooHistoricalImpl());
+			addFactory(new QuoteFactoryYahooRealtimeImpl());
+		}
+	}	
+
+	// we should really have a delete too
+	protected void addFactory(QuoteFactory factory)
+	{
+		this.factories.add(factory);
 	}
 
 	protected String trim(String value)
@@ -77,35 +109,93 @@ public abstract class QuoteFactoryYahooImpl implements QuoteFactory
 	
 	public List<Quote> getAllQuotes(String ticker) throws QuoteFactoryException
 	{
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getAllQuotes(ticker);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
 		throw new UnsupportedOperationException();
 	}
 
 	public Quote getQuote(String ticker) throws QuoteFactoryException
 	{
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getQuote(ticker);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
 		throw new UnsupportedOperationException();
 	}
 
 	public Quote getQuote(String ticker, Date date)
 			throws QuoteFactoryException
 	{
-		throw new UnsupportedOperationException();
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getQuote(ticker, date);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
+		throw new UnsupportedOperationException();	
 	}
 
 	public List<Quote> getQuotes(String ticker, Date startDate, Date stopDate)
 			throws QuoteFactoryException
 	{
-		throw new UnsupportedOperationException();
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getQuotes(ticker, startDate, stopDate);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
+		throw new UnsupportedOperationException();	
 	}
 
 	public List<Quote> getQuotes(String[] tickers) throws QuoteFactoryException
 	{
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getQuotes(tickers);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
 		throw new UnsupportedOperationException();	
-
 	}
 
 	public List<String> getTickers(String regex) throws QuoteFactoryException
 	{
-		throw new UnsupportedOperationException();
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getTickers(regex);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
+		throw new UnsupportedOperationException();	
 	}
-
 }

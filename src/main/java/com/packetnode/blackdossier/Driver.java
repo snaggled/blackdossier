@@ -9,6 +9,7 @@ import com.packetnode.blackdossier.quote.Quote;
 import com.packetnode.blackdossier.quote.QuoteFactory;
 import com.packetnode.blackdossier.quote.QuoteFactoryException;
 import com.packetnode.blackdossier.quote.QuoteFactoryYahooHistoricalImpl;
+import com.packetnode.blackdossier.quote.QuoteFactoryYahooImpl;
 import com.packetnode.blackdossier.quote.QuoteFactoryYahooRealtimeImpl;
 
 public class Driver {
@@ -18,7 +19,7 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Driver init");
-		QuoteFactory qf = new QuoteFactoryYahooRealtimeImpl();
+		QuoteFactory qf = QuoteFactoryYahooImpl.getFactory();
 	    Session session = null; 
 	
 		try 
@@ -31,7 +32,6 @@ public class Driver {
 			while (it.hasNext()) System.out.println(it.next());
 			qf.finished();
 			
-			qf = new QuoteFactoryYahooHistoricalImpl();
 			List<String> tickers = qf.getAllTickers();
 			Iterator<String> tit = tickers.iterator();
 			while (tit.hasNext())
@@ -39,18 +39,6 @@ public class Driver {
 				String ticker = tit.next();
 				quotes = qf.getAllQuotes(ticker);
 				System.out.println("Found " + quotes.size() + " records for " + ticker);   
-				session = HibernateManager.getSessionFactory().getCurrentSession(); 
-			    session.beginTransaction(); 
-
-				it = quotes.iterator();
-				while (it.hasNext()) 
-				{
-					Quote q = it.next();
-					session.save(q);
-				}
-				System.out.println("commit");
-			    session.getTransaction().commit(); 
-
 			}
 		}
 		catch (QuoteFactoryException e)
