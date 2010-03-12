@@ -3,20 +3,40 @@ package com.packetnode.blackdossier.quote;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
 
 public class Quote
 {
 	private long id;
 	private String ticker;
-	private Float close;
+	private BigDecimal close;
 	private Date date;
-	private Float priceChange;
-	private Float percentChange;
-	private Float open;
-	private Float high;
-	private Float low;
+	private BigDecimal priceChange;
+	private BigDecimal percentChange;
+	private BigDecimal open;
+	private BigDecimal high;
+	private BigDecimal low;
+	
+	@Override
+	public int hashCode()
+	{
+		return toString().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return toString().equals(obj.toString());
+	}
+
 	private long volume;
-	private Float adjustedClose;
+	private BigDecimal adjustedClose;
 
 	static final DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
 
@@ -33,12 +53,12 @@ public class Quote
 
 	public Quote(String ticker, 
 				 Date date, 
-				 Float open,
-				 Float high,
-				 Float low,
-				 Float close, 
+				 BigDecimal open,
+				 BigDecimal high,
+				 BigDecimal low,
+				 BigDecimal close, 
 				 long volume, 
-				 Float adjustedClose)
+				 BigDecimal adjustedClose)
 	{
 		this.ticker = ticker;
 		this.date = date;
@@ -48,17 +68,17 @@ public class Quote
 		this.close = close;
 		this.volume = volume;
 		this.adjustedClose = adjustedClose; 
-		this.priceChange = close - open;
-		this.percentChange = (priceChange/open)*100;
+		//this.priceChange = close - open;
+		//this.percentChange = (priceChange/open)*100;
 	}
 	
 	public Quote(String ticker, 
-				 Float close, 
+				 BigDecimal close, 
 				 Date date, 
-				 Float priceChange, 
-				 Float open, 
-				 Float high, 
-				 Float low, 
+				 BigDecimal priceChange, 
+				 BigDecimal open, 
+				 BigDecimal high, 
+				 BigDecimal low, 
 				 long volume)
 	{
 		this.ticker = ticker;
@@ -67,9 +87,9 @@ public class Quote
 		this.priceChange = priceChange;
 		this.high = high;
 		this.low = low;
-		this.priceChange = priceChange;
+		//this.priceChange = priceChange;
 		this.volume = volume; 
-		this.percentChange = (priceChange/open)*100;
+		//this.percentChange = (priceChange/open)*100;
 	}
 
 	public String toString()
@@ -116,22 +136,22 @@ public class Quote
 		this.ticker = ticker;
 	}
 
-	public Float getAdjustedClose()
+	public BigDecimal getAdjustedClose()
 	{
 		return adjustedClose;
 	}
 
-	public void setAdjustedClose(Float adjustedClose)
+	public void setAdjustedClose(BigDecimal adjustedClose)
 	{
 		this.adjustedClose = adjustedClose;
 	}
 	
-	public Float getClose()
+	public BigDecimal getClose()
 	{
 		return close;
 	}
 
-	public void setClose(Float close)
+	public void setClose(BigDecimal close)
 	{
 		this.close = close;
 	}
@@ -146,52 +166,52 @@ public class Quote
 		this.date = date;
 	}
 
-	public Float getPriceChange()
+	public BigDecimal getPriceChange()
 	{
 		return priceChange;
 	}
 
-	public void setPriceChange(Float change)
+	public void setPriceChange(BigDecimal change)
 	{
 		this.priceChange = change;
 	}
 	
-	public Float getPercentChange()
+	public BigDecimal getPercentChange()
 	{
 		return percentChange;
 	}
 
-	public void setPercentChange(Float change)
+	public void setPercentChange(BigDecimal change)
 	{
 		this.percentChange = change;
 	}
 	
-	public Float getOpen()
+	public BigDecimal getOpen()
 	{
 		return open;
 	}
 
-	public void setOpen(Float open)
+	public void setOpen(BigDecimal open)
 	{
 		this.open = open;
 	}
 
-	public Float getHigh()
+	public BigDecimal getHigh()
 	{
 		return high;
 	}
 
-	public void setHigh(Float high)
+	public void setHigh(BigDecimal high)
 	{
 		this.high = high;
 	}
 
-	public Float getLow()
+	public BigDecimal getLow()
 	{
 		return low;
 	}
 
-	public void setLow(Float low)
+	public void setLow(BigDecimal low)
 	{
 		this.low = low;
 	}

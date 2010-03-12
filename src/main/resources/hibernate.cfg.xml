@@ -21,6 +21,6 @@
 		 <property name="show_sql">false</property>
 		 <!-- Drop and re-create the database schema on startup --> 
 		 <property name="hbm2ddl.auto">update</property> 
-		 <mapping resource="com/packetnode/blackdossier/quote/Quote.hbm.xml"/> 
+		 <mapping resource="com/packetnode/blackdossier/quote/Quote.hbm.xml"></mapping> 
 	</session-factory> 
 </hibernate-configuration> 

@@ -1,6 +1,8 @@
 package com.packetnode.blackdossier.quote;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -107,6 +109,21 @@ public class QuoteFactoryYahooImpl implements QuoteFactory
 		return Arrays.asList(QuoteFactory.DJIA);
 	}
 	
+	public String getTicker(String ticker) throws QuoteFactoryException
+	{
+		try
+		{
+			String t = URLEncoder.encode(ticker, "ISO-8859-1");
+			Quote quote = getQuote(t);
+			return URLEncoder.encode(quote.getTicker(), "ISO-8859-1");
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			throw new QuoteFactoryException(e);
+		}
+	}
+
+	
 	public List<Quote> getAllQuotes(String ticker) throws QuoteFactoryException
 	{
 		for (QuoteFactory f : this.factories)
@@ -176,21 +193,6 @@ public class QuoteFactoryYahooImpl implements QuoteFactory
 			try
 			{
 				return f.getQuotes(tickers);
-			}
-			catch (UnsupportedOperationException e)
-			{	
-			}
-		}
-		throw new UnsupportedOperationException();	
-	}
-
-	public List<String> getTickers(String regex) throws QuoteFactoryException
-	{
-		for (QuoteFactory f : this.factories)
-		{
-			try
-			{
-				return f.getTickers(regex);
 			}
 			catch (UnsupportedOperationException e)
 			{	

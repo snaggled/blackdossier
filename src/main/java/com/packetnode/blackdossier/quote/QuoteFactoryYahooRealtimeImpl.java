@@ -1,6 +1,7 @@
 package com.packetnode.blackdossier.quote;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.*;
 import org.apache.http.client.*;
@@ -32,7 +33,7 @@ implements QuoteFactory
 			String[] params = realtime.split(",");
 
 			String ticker = trim(params[TICKER]);
-			Float price = new Float(params[PRICE]);
+			BigDecimal price = new BigDecimal(params[PRICE]);
 			Date date = null;
 			
 			try
@@ -45,10 +46,10 @@ implements QuoteFactory
 
 			// date = new Date(params[DATE]);
 			String lastTrade = trim(params[LASTTRADE]);
-			Float change = new Float(params[CHANGE]);
-			Float open = new Float(params[OPEN]);
-			Float  high = new Float(params[HIGH]);
-			Float low = new Float(params[LOW]);
+			BigDecimal change = new BigDecimal(params[CHANGE]);
+			BigDecimal open = new BigDecimal(params[OPEN]);
+			BigDecimal  high = new BigDecimal(params[HIGH]);
+			BigDecimal low = new BigDecimal(params[LOW]);
 			Long volume = new Long(params[VOLUME]);
 			return new Quote(ticker, price, date, change, open, high, low, volume);
 	}

@@ -1,6 +1,8 @@
 package com.packetnode.blackdossier;
 
 import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.hibernate.Session;
 import com.packetnode.blackdossier.hibernate.HibernateManager;
@@ -24,26 +26,27 @@ public class Driver {
 	
 		try 
 		{
-			Quote quote = qf.getQuote("OPWV");
-			System.out.println(quote);
-			
-			List<Quote> quotes = qf.getQuotes(QuoteFactory.DJIA);
-			Iterator<Quote> it = quotes.iterator();
-			while (it.hasNext()) System.out.println(it.next());
-			qf.finished();
-			
+			//String ticker = qf.getTicker("^FTSE");
+			//Quote quote = qf.getQuote(ticker);
+			//List<Quote> bt = qf.getAllQuotes(ticker);
+			//System.out.println("Found " + bt.size() + " records for " + ticker);   
+
 			List<String> tickers = qf.getAllTickers();
 			Iterator<String> tit = tickers.iterator();
 			while (tit.hasNext())
 			{
-				String ticker = tit.next();
-				quotes = qf.getAllQuotes(ticker);
+				String ticker = qf.getTicker(tit.next());
+				List<Quote>quotes = qf.getAllQuotes(ticker);
 				System.out.println("Found " + quotes.size() + " records for " + ticker);   
 			}
 		}
 		catch (QuoteFactoryException e)
 		{
 			e.printStackTrace();
+		} 
+		finally
+		{
+			qf.finished();
 		}
 	}
 
