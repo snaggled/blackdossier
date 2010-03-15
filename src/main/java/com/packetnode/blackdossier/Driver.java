@@ -29,28 +29,21 @@ public class Driver {
 		{
 			String ticker = qf.getTicker("AA");
 			Quote quote = qf.getQuote(ticker);
-			List<Quote> bt = qf.getAllQuotes(ticker);
+			List<Quote> bt = qf.getQuotes(ticker, 3);
 			System.out.println("Found " + bt.size() + " records for " + ticker);   
-
-			/*List<String> tickers = qf.getAllTickers();
-			Iterator<String> tit = tickers.iterator();
-			while (tit.hasNext())
-			{
-				String ticker = qf.getTicker(tit.next());
-				List<Quote>quotes = qf.getAllQuotes(ticker);
-				System.out.println("Found " + quotes.size() + " records for " + ticker);   
-			}*/
 			
 			double[] values = new double[bt.size()];
 			int i = 0;
 			Iterator<Quote> it = bt.iterator();
 			while (it.hasNext())
 			{
-				values[i] = it.next().getAdjustedClose().doubleValue();
+				Quote q = it.next();
+				values[i++] = q.getAdjustedClose().doubleValue();
 			}
-			GaussianDistribution dg = new GaussianDistribution(values);
-			System.out.println(dg.probability(13.));
+			GaussianMixtureDistribution dg = new GaussianMixtureDistribution(3, values);
+			System.out.println(values.length);
 			System.out.println(dg);
+			System.out.println(dg.probability(.891));
 		}
 		catch (QuoteFactoryException e)
 		{

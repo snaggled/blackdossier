@@ -186,6 +186,21 @@ public class QuoteFactoryYahooImpl implements QuoteFactory
 		throw new UnsupportedOperationException();	
 	}
 
+	public List<Quote> getQuotes(String ticker, int maxQuotes) throws QuoteFactoryException
+	{
+		for (QuoteFactory f : this.factories)
+		{
+			try
+			{
+				return f.getQuotes(ticker, maxQuotes);
+			}
+			catch (UnsupportedOperationException e)
+			{	
+			}
+		}
+		throw new UnsupportedOperationException();	
+	}
+	
 	public List<Quote> getQuotes(String[] tickers) throws QuoteFactoryException
 	{
 		for (QuoteFactory f : this.factories)

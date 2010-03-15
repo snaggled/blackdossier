@@ -19,6 +19,7 @@ public interface QuoteFactory
 	public List<Quote> getQuotes(String ticker, Date startDate, Date stopDate) throws QuoteFactoryException;
 	public List<Quote> getQuotes(String[] tickers) throws QuoteFactoryException;
 	public List<Quote> getAllQuotes(String ticker) throws QuoteFactoryException;
+	public List<Quote> getQuotes(String ticker, int maxQuotes) throws QuoteFactoryException;
 	public String getTicker(String ticker) throws QuoteFactoryException;
 	public void finished();
 }

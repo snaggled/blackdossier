@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 
 import org.apache.commons.logging.*;
+
 public class GaussianDistribution implements Distribution 
 {
 	private double mean;
@@ -19,11 +20,14 @@ public class GaussianDistribution implements Distribution
 	}
 	
 	public GaussianDistribution(double[] values)
-	{		
+	{	
+		//Logger.getAnonymousLogger().info(String.valueOf(values.length));
+		
 		// 1. mean
 		double sum = 0;
 		for (double v : values) sum += v;
 		this.mean = sum/values.length;
+		System.out.println(this.mean);
 
 		// 2. variance
 		double[] deltas = values.clone();
@@ -59,9 +63,8 @@ public class GaussianDistribution implements Distribution
 		logger.log(Level.INFO, "main()");
 		GaussianDistribution gd = new GaussianDistribution(1., 9.);
 		logger.log(Level.INFO, gd.toString());
-		double[] values = {1, 2, 3};
+		double[] values = {0.88, 0.89, 0.90};
 		gd = new GaussianDistribution(values);
 		logger.log(Level.INFO, gd.toString());
-		System.out.println(gd.probability(2.00));
 	}
 }

@@ -76,8 +76,8 @@ public class QuoteFactoryCachedYahooHistoricalImpl extends
 		System.out.println("commit");
 
 	}
-
-	public List<Quote> getAllQuotes(String ticker) throws QuoteFactoryException
+	
+	public List<Quote> getQuotes(String ticker, int maxQuotes) throws QuoteFactoryException
 	{
 		// we should:
 		// get the realtime quote, extra the latest date from it
@@ -106,7 +106,8 @@ public class QuoteFactoryCachedYahooHistoricalImpl extends
 		{
 			System.out.println("Theres nothing in the db for this");
 			store(yahooHistorical.getAllQuotes(ticker));
-		} else
+		} 
+		else
 		{
 			System.out.println("The latest in the db is: " + result.getDate());
 			long diff = (latest.getDate().getTime() - result.getDate()
@@ -135,11 +136,18 @@ public class QuoteFactoryCachedYahooHistoricalImpl extends
 		session.beginTransaction();
 
 		q = session.createQuery("from Quote q where q.ticker = '" + ticker
-				+ "' order by q.date desc");
-		q.setFetchSize(3);
+				+ "' order by q.date asc");
+		if (maxQuotes > 0) q.setMaxResults(maxQuotes);
+		
 		List<Quote> results = q.list();
 		session.getTransaction().commit();
 		return results;
 	}
+
+	public List<Quote> getAllQuotes(String ticker) throws QuoteFactoryException
+	{
+		return this.getQuotes(ticker, 0);
+	}
+
 
 }
