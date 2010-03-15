@@ -136,6 +136,7 @@ public class QuoteFactoryCachedYahooHistoricalImpl extends
 
 		q = session.createQuery("from Quote q where q.ticker = '" + ticker
 				+ "' order by q.date desc");
+		q.setFetchSize(3);
 		List<Quote> results = q.list();
 		session.getTransaction().commit();
 		return results;
