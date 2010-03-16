@@ -19,6 +19,21 @@ public class GaussianDistribution implements Distribution
 		this.standardDeviation = Math.sqrt(deviance);
 	}
 	
+	public double getMean()
+	{
+		return this.mean;
+	}
+	
+	public double getVariance()
+	{
+		return this.variance;
+	}
+	
+	public double getStandardDeviation()
+	{
+		return this.standardDeviation;
+	}
+	
 	public GaussianDistribution(double[] values)
 	{	
 		//Logger.getAnonymousLogger().info(String.valueOf(values.length));
@@ -27,7 +42,7 @@ public class GaussianDistribution implements Distribution
 		double sum = 0;
 		for (double v : values) sum += v;
 		this.mean = sum/values.length;
-		System.out.println(this.mean);
+		//System.out.println(this.mean);
 
 		// 2. variance
 		double[] deltas = values.clone();
